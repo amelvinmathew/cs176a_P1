@@ -51,8 +51,15 @@ s.send('DATA\r\n'.encode())
 s.recv(BUFFER_SIZE)
  
 # Send message headers and body.
-s.send(f'From: {from_addr}\r\nTo: {to_addr}\r\nSubject: {subject}\r\n\r\n{body}\r\n'.encode())
- 
+s.send(f'From: {from_addr}\r\n'.encode())
+s.send(f'To: {to_addr}\r\n'.encode())
+s.send(f'Subject: {subject}\r\n'.encode())
+s.send('\r\n'.encode())
+for line in body.splitlines():
+    s.send((line + '\r\n').encode())
+s.send('.\r\n'.encode())
+
+
 # End message with a line containing only a period.
 s.send('.\r\n'.encode())
 s.recv(BUFFER_SIZE)
