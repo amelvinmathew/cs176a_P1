@@ -38,21 +38,27 @@ if not response.startswith('250'):
     raise Exception('250 reply not received from server.')
 
 # Send MAIL FROM command.
-
-
+s.send(f'MAIL FROM: <{from_addr}>\r\n'.encode())
+s.recv(BUFFER_SIZE)
+ 
 # Send RCPT TO command.
-
-
+s.send(f'RCPT TO: <{to_addr}>\r\n'.encode())
+s.recv(BUFFER_SIZE)
+ 
 # Send DATA command.
-
-
+s.send('DATA\r\n'.encode())
+s.recv(BUFFER_SIZE)
+ 
 # Send message headers and body.
-
-
+s.send(f'From: {from_addr}\r\nTo: {to_addr}\r\nSubject: {subject}\r\n\r\n{body}\r\n'.encode())
+ 
 # End message with a line containing only a period.
-
-
+s.send('.\r\n'.encode())
+s.recv(BUFFER_SIZE)
+ 
 # Send QUIT command.
+s.send('QUIT\r\n'.encode())
+s.recv(BUFFER_SIZE)
 
 
 # Close the socket when finished.
