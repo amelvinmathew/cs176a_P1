@@ -14,6 +14,8 @@ port     = int(sys.argv[2])
 username = sys.argv[3]
 
 # Establish a TCP connection with the POP3 server.
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((host, port))
 
 
 # Read greeting from the server.

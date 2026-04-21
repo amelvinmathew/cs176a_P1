@@ -18,7 +18,8 @@ subject   = sys.argv[5]
 body = sys.stdin.read()
 
 # Establish a TCP connection with the SMTP server.
-
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((host, port))
 
 # Read greeting from the server.
 data = s.recv(BUFFER_SIZE)
